@@ -13,7 +13,9 @@ module.exports = {
         'grayBlueHover': '#6395b8',
         'lightText': '#fcfcfc',
         'blueText': '#7191a5',
-        'infoBg': '#dfe7ec'
+        'infoBg': '#dfe7ec',
+        'moduleGray': '#8c99a8',
+        
       },
       gridTemplateColumns:{
         'auto': ''

@@ -1,13 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect,useRef } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 import { loadIcons } from '../assets/Icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Module from './Module'
 
-const Grid = ({ handleMoves, clicked }) => {
-  const { theme, setTheme, grid, setGrid } = useContext(GlobalContext)
+const Grid = ({ handleMoves }) => {
+  const { theme, setTheme, grid, setGrid, clicked, setWinningArr, winningArr,setIsGameOver } =
+    useContext(GlobalContext)
 
-  const [winningArr, setWinningArr] = useState([])
+  const gridRef = useRef(null)
 
   // number array
   const numberArea = []
@@ -42,7 +43,12 @@ const Grid = ({ handleMoves, clicked }) => {
   // logic for clicking
   useEffect(() => {
     if (clicked.length === 2) {
-      if(clicked[0].isEqualNode(clicked[1])){
+      const children = gridRef.current.childNodes
+      children.forEach((el) => el.classList.add('non-clickable'))
+       setTimeout(() => {
+        children.forEach((el) => el.classList.remove('non-clickable'))
+      }, 1000)
+      if (clicked[0].isEqualNode(clicked[1])) {
         setWinningArr([winningArr, ...clicked].flat())
         clicked.length = 0
       }
@@ -50,17 +56,20 @@ const Grid = ({ handleMoves, clicked }) => {
         clicked.map((el) => el.classList.remove('active'))
         clicked.length = 0
       }, 1000)
-    } 
+    }
   })
 
-  if(winningArr.length === numberGridArea.length || winningArr.length === iconGridArea.length) {
-    // return <Module />
+  if (
+    winningArr.length === numberGridArea.length ||
+    winningArr.length === iconGridArea.length
+  ) {
+    setIsGameOver(true)
+    return <Module />
   }
-  console.log(winningArr)
-  console.log(numberGridArea)
 
   return (
     <section
+      ref={gridRef}
       style={{
         gridTemplateColumns: `repeat(${grid === 8 ? 4 : 6}, minmax(0,1fr))`,
       }}

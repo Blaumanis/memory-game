@@ -12,7 +12,9 @@ export default ({ children }) => {
   const [moves, setMoves] = useState(0)
   
   const [clicked, setClicked] = useState([])
+  const [winningArr, setWinningArr] = useState([])
 
+  const [isGameOver, setIsGameOver] = useState(false)
 
   const store = {
     theme,
@@ -28,10 +30,12 @@ export default ({ children }) => {
     moves,
     setMoves,
     clicked,
-    setClicked
+    setClicked,
+    winningArr,
+    setWinningArr,
+    isGameOver,
+    setIsGameOver
   }
 
-
-  
   return <GlobalContext.Provider value={store}>{children}</GlobalContext.Provider>
 }

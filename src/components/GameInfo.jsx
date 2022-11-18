@@ -2,14 +2,17 @@ import React, { useEffect, useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 
 const GameInfo = () => {
-  const {seconds,setSeconds,minutes,setMinutes,moves} = useContext(GlobalContext)
+  const { seconds, setSeconds, minutes, setMinutes, moves, isGameOver } =
+    useContext(GlobalContext)
 
-  // useEffect(() => {
-  //   const id = setInterval(() => setSeconds((oldCount) => oldCount + 1), 1000)
-  //   return () => {
-  //     clearInterval(id)
-  //   }
-  // }, [seconds])
+  useEffect(() => {
+    const id = setInterval(() => setSeconds((oldCount) => oldCount + 1), 1000)
+    return () => {
+      // if (isGameOver) {
+        // }
+        clearInterval(id)
+    }
+  }, [seconds])
 
   const value = 0
   if (seconds === 60) {
