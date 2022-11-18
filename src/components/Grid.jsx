@@ -1,12 +1,18 @@
-import React, { useState, useContext, useEffect,useRef } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 import { loadIcons } from '../assets/Icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Module from './Module'
 
 const Grid = ({ handleMoves }) => {
-  const { theme, setTheme, grid, setGrid, clicked, setWinningArr, winningArr,setIsGameOver } =
-    useContext(GlobalContext)
+  const {
+    theme,
+    grid,
+    clicked,
+    setWinningArr,
+    winningArr,
+    setIsGameOver,
+  } = useContext(GlobalContext)
 
   const gridRef = useRef(null)
 
@@ -27,11 +33,14 @@ const Grid = ({ handleMoves }) => {
   let full = [...icons]
   let half = [...icons].slice(0, 8)
 
+  const children = gridRef?.current?.childNodes
   if (grid === 8) {
     icons = half
+    children?.forEach((el) => el.classList.add('button-large'))
   }
   if (grid === 18) {
     icons = full
+    children?.forEach((el) => el.classList.add('button-small'))
   }
 
   const doubleIconArr = Array(2)
@@ -45,9 +54,9 @@ const Grid = ({ handleMoves }) => {
     if (clicked.length === 2) {
       const children = gridRef.current.childNodes
       children.forEach((el) => el.classList.add('non-clickable'))
-       setTimeout(() => {
+      setTimeout(() => {
         children.forEach((el) => el.classList.remove('non-clickable'))
-      }, 1000)
+      }, 500)
       if (clicked[0].isEqualNode(clicked[1])) {
         setWinningArr([winningArr, ...clicked].flat())
         clicked.length = 0
@@ -55,7 +64,7 @@ const Grid = ({ handleMoves }) => {
       setTimeout(() => {
         clicked.map((el) => el.classList.remove('active'))
         clicked.length = 0
-      }, 1000)
+      }, 500)
     }
   })
 
@@ -66,30 +75,32 @@ const Grid = ({ handleMoves }) => {
     setIsGameOver(true)
     return <Module />
   }
-
   return (
     <section
       ref={gridRef}
       style={{
         gridTemplateColumns: `repeat(${grid === 8 ? 4 : 6}, minmax(0,1fr))`,
       }}
-      className='mx-auto w-[600px] grid gap-4 justify-center py-8 '
+      className='mx-auto w-[600px] grid gap-4 justify-center py-8 
+      max-[768px]:w-full max-[768px]:justify-items-center max-[530px]:p-0'
     >
       {theme === 'Numbers'
         ? numberGridArea.map((el, idx) => (
             <button
+              style={{ width: `${grid === 8 ? 100 : 75}px` }}
               onClick={(e) => handleMoves(e.target)}
               key={idx}
-              className='rounded-full bg-buttonDark aspect-square text-2xl text-buttonDark'
+              className='w-[100px] rounded-full bg-buttonDark aspect-square text-2xl text-buttonDark'
             >
               {el}
             </button>
           ))
         : iconGridArea.map((el, idx) => (
             <button
+              style={{ width: `${grid === 8 ? 100 : 75}px` }}
               onClick={(e) => handleMoves(e.target)}
               key={idx}
-              className='rounded-full bg-buttonDark aspect-square text-2xl text-lightText p-4'
+              className='w-[100px] rounded-full bg-buttonDark aspect-square text-2xl text-lightText p-4'
             >
               <FontAwesomeIcon
                 className='text-buttonDark pointer-events-none'

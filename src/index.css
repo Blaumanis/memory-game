@@ -21,6 +21,17 @@
   }
 }
 
+@layer components {
+  @media (max-width: 530px) {
+    .button-small {
+      width: 50px !important;
+    } 
+    .button-large {
+      width: 75px !important;
+    }
+  }
+}
+
 *,*::after,*::before {
   margin: 0;
   padding: 0;

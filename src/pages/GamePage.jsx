@@ -14,7 +14,8 @@ const GamePage = () => {
   }
 
   return (
-    <main className='w-screen min-h-screen flex flex-col justify-between p-8'>
+    <main className='w-screen min-h-screen flex flex-col justify-between p-8 
+    max-[768px]:p-4 max-[530px]:justify-center max-[530px]:gap-8'>
       <GameHeader/>
       <Grid handleMoves={handleMoves} />
       <GameInfo/>
