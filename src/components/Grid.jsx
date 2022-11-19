@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from 'react'
+import React, { useState, useContext, useEffect, useRef, useLayoutEffect } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 import { loadIcons } from '../assets/Icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -15,6 +15,7 @@ const Grid = ({ handleMoves }) => {
   } = useContext(GlobalContext)
 
   const gridRef = useRef(null)
+
 
   // number array
   const numberArea = []
@@ -34,14 +35,16 @@ const Grid = ({ handleMoves }) => {
   let half = [...icons].slice(0, 8)
 
   const children = gridRef?.current?.childNodes
-  if (grid === 8) {
-    icons = half
-    children?.forEach((el) => el.classList.add('button-large'))
-  }
-  if (grid === 18) {
-    icons = full
-    children?.forEach((el) => el.classList.add('button-small'))
-  }
+  useLayoutEffect(()=>{
+    if (grid === 8) {
+      icons = half
+      children?.forEach((el) => el.classList.add('button-large'))
+    }
+    if (grid === 18) {
+      icons = full
+      children?.forEach((el) => el.classList.add('button-small'))
+    }
+  },[children])
 
   const doubleIconArr = Array(2)
     .fill([...icons])
@@ -66,7 +69,7 @@ const Grid = ({ handleMoves }) => {
         clicked.length = 0
       }, 500)
     }
-  })
+  },[clicked])
 
   if (
     winningArr.length === numberGridArea.length ||
@@ -90,7 +93,7 @@ const Grid = ({ handleMoves }) => {
               style={{ width: `${grid === 8 ? 100 : 75}px` }}
               onClick={(e) => handleMoves(e.target)}
               key={idx}
-              className='w-[100px] rounded-full bg-buttonDark aspect-square text-2xl text-buttonDark'
+              className='rounded-full bg-buttonDark aspect-square text-2xl text-buttonDark'
             >
               {el}
             </button>
@@ -100,7 +103,7 @@ const Grid = ({ handleMoves }) => {
               style={{ width: `${grid === 8 ? 100 : 75}px` }}
               onClick={(e) => handleMoves(e.target)}
               key={idx}
-              className='w-[100px] rounded-full bg-buttonDark aspect-square text-2xl text-lightText p-4'
+              className='rounded-full bg-buttonDark aspect-square text-2xl text-lightText p-4'
             >
               <FontAwesomeIcon
                 className='text-buttonDark pointer-events-none'

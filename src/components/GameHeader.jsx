@@ -3,15 +3,7 @@ import { Link } from 'react-router-dom'
 import { GlobalContext } from '../context/GlobalState'
 
 const GameHeader = () => {
-  const { setMoves, setMinutes, setSeconds, setWinningArr, setIsGameOver } = useContext(GlobalContext)
-
-  const handleRestart = () => {
-    setMoves(0)
-    setMinutes(0)
-    setSeconds(0)
-    setWinningArr([])
-    setIsGameOver(false)
-  }
+  const { handleRestart } = useContext(GlobalContext)
 
   return (
     <header

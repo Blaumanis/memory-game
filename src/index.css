@@ -22,6 +22,12 @@
 }
 
 @layer components {
+  .button-small {
+    width: 75px !important;
+  }
+  .button-large {
+    width: 100px !important;
+  }
   @media (max-width: 530px) {
     .button-small {
       width: 50px !important;
