@@ -90,7 +90,6 @@ const Grid = ({ handleMoves }) => {
       {theme === 'Numbers'
         ? numberGridArea.map((el, idx) => (
             <button
-              style={{ width: `${grid === 8 ? 100 : 75}px` }}
               onClick={(e) => handleMoves(e.target)}
               key={idx}
               className='rounded-full bg-buttonDark aspect-square text-2xl text-buttonDark'
@@ -100,7 +99,6 @@ const Grid = ({ handleMoves }) => {
           ))
         : iconGridArea.map((el, idx) => (
             <button
-              style={{ width: `${grid === 8 ? 100 : 75}px` }}
               onClick={(e) => handleMoves(e.target)}
               key={idx}
               className='rounded-full bg-buttonDark aspect-square text-2xl text-lightText p-4'
